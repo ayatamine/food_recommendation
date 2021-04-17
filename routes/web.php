@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,9 @@ Route::post('/meal/add', 'HomeController@addMeal')->name('add_meal');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/seed_data',function(){
+  Artisan::call('migrate:refresh');
+  Artisan::call('db:seed');
+  return 'done';
+});
