@@ -64,7 +64,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // dd($data);
+        // dd(request());
         return User::create([
             'username' => $data['username'],
             'age' => $data['age'],
@@ -73,7 +73,7 @@ class RegisterController extends Controller
             'width' => $data['width'],
             'height' => $data['height'],
             'sportive' => $data['sportive'],
-            'health_status' => implode(',',$data['health_status']),
+            'health_status' =>  request()->has('health_status') ? implode(',',$data['health_status']) : null,
             'password' => Hash::make($data['password']),
         ]);
 

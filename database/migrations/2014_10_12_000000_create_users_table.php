@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer('height');
             $table->integer('width');
             $table->boolean('sportive')->default(true);
-            $table->text('health_status');
+            $table->string('health_status')->nullable();
             // $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('username');
