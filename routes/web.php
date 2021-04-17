@@ -31,7 +31,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/seed_data',function(){
-  Artisan::call('migrate:refresh');
-  Artisan::call('db:seed');
+  Artisan::call('migrate:refresh', [
+    '--force' => true
+ ]);
+  Artisan::call('db:seed', [
+    '--force' => true
+ ]);
   return 'done';
 });
