@@ -93,7 +93,7 @@
 						<nav class="col-md-6 col-12 tm-nav">
 							<ul class="tm-nav-ul">
 
-								<li class="tm-nav-li"><a href="/" class="tm-nav-link @if(Request::segment(1)=='') active @endif">1</a></li>
+								<li class="tm-nav-li"><a href="{{route('homepage')}}" class="tm-nav-link @if(Request::segment(1)=='') active @endif">1</a></li>
 								<li class="tm-nav-li"><a href="{{route('rating')}}" class="tm-nav-link @if(Request::segment(1)=='rating') active @endif">2</a></li>
 								<li class="tm-nav-li"><a href="contact.html" class="tm-nav-link">3</a></li>
 							</ul>
