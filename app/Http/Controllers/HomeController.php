@@ -29,9 +29,9 @@ class HomeController extends Controller
     }
     public function rating()
     {
-        $meals = Meal::with('rating')->inRandomOrder()->whereType('meal')->get();
-        $desserts = Meal::with('rating')->inRandomOrder()->whereType('dessert')->get();
-        $salads = Meal::with('rating')->inRandomOrder()->whereType('salad')->get();
+        $meals = Meal::inRandomOrder()->whereType('meal')->get();
+        $desserts = Meal::inRandomOrder()->whereType('dessert')->get();
+        $salads = Meal::inRandomOrder()->whereType('salad')->get();
         return view('rating',compact(['meals','desserts','salads']));
     }
     public function rateMeal(Request $request){
@@ -46,10 +46,12 @@ class HomeController extends Controller
                 'value'=>$request->value,
             ]);
             return response()->json(['message'=>'The meal rated successfuly']);
+        }else{
+            $rate->value = $request->value;
+            $rate->save();
+            return response()->json(['message'=>'The meal already rated']);
         }
-        $rate->value = $request->value;
-        $rate->save();
-        return response()->json(['message'=>'The meal already rated']);
+
     }
     public function allMeals(){
         $meals = Meal::all();

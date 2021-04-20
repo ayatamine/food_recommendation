@@ -2,6 +2,11 @@
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<style>
+.fa-check{
+  display:none
+}
+</style>
 @endsection
 @section('content')
             <header class="row tm-welcome-section">
@@ -36,18 +41,19 @@
 
                           <div class="btn-group btn-group-toggle meal-rating-values" data-toggle="buttons" data-meal_id="{{$m->id}}">
                             <label class="btn btn-danger ">
-                              <i class="fa fa-check @if(!($m->rating->value==0)) d-none @endif"></i>
-                              <input type="radio" name="options"  autocomplete="off" value="Bad">
+
+                              <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==0) d-block @endif"></i>
+                              <input type="radio" name="options"  autocomplete="off" value="0">
                               Bad
                             </label>
                             <label class="btn btn-warning active">
-                              <i class="fa fa-check @if(!($m->rating->value==1)) d-none @endif"></i>
+                              <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==1) d-block @endif"></i>
                               <input type="radio" name="options"  autocomplete="off" checked
-                                value="Normal"> Normal
+                                value="1"> Normal
                             </label>
                             <label class="btn btn-success">
-                              <i class="fa fa-check @if(!($m->rating->value==2)) d-none @endif"></i>
-                              <input type="radio" name="options"  autocomplete="off" value="Good">
+                              <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==2) d-block @endif"></i>
+                              <input type="radio" name="options"  autocomplete="off" value="2">
                               Good
                             </label>
 
@@ -75,18 +81,18 @@
 
                           <div class="btn-group btn-group-toggle meal-rating-values" data-toggle="buttons" data-meal_id="{{$m->id}}">
                             <label class="btn btn-danger ">
-                             <i class="fa fa-check @if(!($m->rating->value==0)) d-none @endif"></i>
-                              <input type="radio" name="options"  autocomplete="off" value="Bad">
+                             <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==0) d-block @endif"></i>
+                              <input type="radio" name="options"  autocomplete="off" value="0">
                               Bad
                             </label>
                             <label class="btn btn-warning active">
-                             <i class="fa fa-check @if(!($m->rating->value==1)) d-none @endif"></i>
+                             <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==1) d-block @endif"></i>
                               <input type="radio" name="options"  autocomplete="off" checked
-                                value="Normal"> Normal
+                                value="1"> Normal
                             </label>
                             <label class="btn btn-success">
-                             <i class="fa fa-check @if(!($m->rating->value==2)) d-none @endif"></i>
-                              <input type="radio" name="options"  autocomplete="off" value="Good">
+                             <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==3) d-block @endif"></i>
+                              <input type="radio" name="options"  autocomplete="off" value="2">
                               Good
                             </label>
 
@@ -114,18 +120,18 @@
 
                           <div class="btn-group btn-group-toggle meal-rating-values" data-toggle="buttons" data-meal_id="{{$m->id}}">
                             <label class="btn btn-danger ">
-                             <i class="fa fa-check @if(!($m->rating->value=="0")) d-none @endif"></i>
-                              <input type="radio" name="options"  autocomplete="off" value="Bad">
+                             <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==0) d-block @endif"></i>
+                              <input type="radio" name="options"  autocomplete="off" value="0">
                               Bad
                             </label>
                             <label class="btn btn-warning active">
-                             <i class="fa fa-check @if(!($m->rating->value=="1")) d-none @endif"></i>
+                             <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==1) d-block @endif"></i>
                               <input type="radio" name="options"  autocomplete="off" checked
-                                value="Normal"> Normal
+                                value="1"> Normal
                             </label>
                             <label class="btn btn-success">
-                             <i class="fa fa-check @if(!($m->rating->value=="2")) d-none @endif"></i>
-                              <input type="radio" name="options"  autocomplete="off" value="Good">
+                             <i class="fa fa-check @if($m->rating() &&  $m->rating()->value ==2) d-block @endif"></i>
+                              <input type="radio" name="options"  autocomplete="off" value="2">
                               Good
                             </label>
 
@@ -150,23 +156,9 @@
   $(document).ready(function() {
   $(document).on('click','.meal-rating-values label',function(){
        let meal_id = $(this).parent().data('meal_id')
-       console.log(meal_id)
+       //console.log(meal_id)
        let v =$(this).find('input').val()
-       switch(v){
-           case 'Bad' :
-             v = 0
-           break;
-           case 'Normal' :
-             v = 1
-           break;
-           case 'Good' :
-             v = 2
-           break;
-           default:
-            case 'Good' :
-                    v = 2
-                break;
-       }
+
        var that = $(this);
        $.ajax({
            method:'post',
@@ -181,8 +173,10 @@
                   showConfirmButton: false,
                   timer: 1500
                 });
-                $(that).parent().find('i').addClass('d-none');
-                $(that).find('i').removeClass('d-none')
+                $(that).parent().find('i').css('display','none');
+                $(that).parent().find('i').removeClass('d-block');
+                $(that).find('i').css('display','block')
+                $(that).find('i').addClass('d-block')
            }
        })
   });

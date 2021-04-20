@@ -17,7 +17,7 @@ class CreateRatingsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('meal_id');
-            $table->enum('value',[0,1,2]);
+            $table->enum('value',[0,1,2])->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
             $table->timestamps();
