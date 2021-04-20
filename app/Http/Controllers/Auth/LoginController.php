@@ -36,4 +36,9 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    protected function authenticated() {
+        if (Auth::check()) {
+            return redirect()->route('/rating');
+        }
+    }
 }

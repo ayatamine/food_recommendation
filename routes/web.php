@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('auth.register');
-});
+})->middleware('guest');
 Route::get('/rating', 'HomeController@rating')->name('rating');
 Route::post('/meal/rate', 'HomeController@rateMeal')->name('rate_meal');
 
